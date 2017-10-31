@@ -1,0 +1,12 @@
+[package]
+name = "sniffer-wall"
+version = "0.1.0"
+authors = ["王跃 <wangyue1@ly.com>"]
+description = "探析之墙"
+
+[dependencies]
+futures = "0.1"
+hyper = "0.11"
+tokio-core = "0.1"
+serde = "1.0"
+serde_json = "1.0"
