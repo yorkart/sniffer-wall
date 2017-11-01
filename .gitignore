@@ -10,5 +10,6 @@ Cargo.lock
 **/*.rs.bk
 
 # intellij idea
-/.idea/
+/**/.idea
 *.iml
+/.idea
