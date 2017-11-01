@@ -1,32 +1,34 @@
 //#![deny(warnings)]
 
+extern crate bytes;
+#[macro_use]
+extern crate log;
+extern crate pretty_env_logger;
 extern crate futures;
-extern crate hyper;
-extern crate tokio_core;
-extern crate serde;
-extern crate serde_json;
 
-mod config;
-use config::reader;
+extern crate serde;
+#[macro_use]
+extern crate serde_derive;
+extern crate serde_json;
+extern crate serde_yaml;
+
+extern crate tokio_core;
+#[macro_use]
+extern crate tokio_io;
+extern crate tokio_timer;
+
+extern crate hyper;
+
+extern crate url;
+
+mod common;
 mod utils;
-use utils::http_client;
 
 
 fn main() {
-    reader::t();
+    drop(pretty_env_logger::init());
 
-//    http_client::HttpClient::post();
-    http_client::HttpClient::get();
+    utils::http::get();
+    utils::json::parse(r#"{"a":"xx"}"#);
     println!("main end!");
 }
-
-//fn get_content(url: &str) {
-//    let url = match url.parse::<Uri>() {
-//        Ok(url) => url,
-//        Err(_) => return Err(UriError),
-//    };
-//    let fresh_request = Request::get(url)?;
-//    let streaming_request = fresh_request.start()?;
-//    let mut response = streaming_request.send()?;
-//    Ok(response.read_to_string()?)
-//}
