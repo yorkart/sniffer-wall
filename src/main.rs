@@ -28,7 +28,10 @@ mod utils;
 fn main() {
     drop(pretty_env_logger::init());
 
-    utils::http::get();
-    utils::json::parse(r#"{"a":"xx"}"#);
-    println!("main end!");
+//    utils::http::get();
+//    utils::json::parse(r#"{"a":"xx"}"#);
+//    println!("main end!");
+
+    common::queue::sync_test();
+
 }
