@@ -108,30 +108,29 @@ impl Service for FrameService {
 
     // Produce a future for computing a response from a request.
     fn call(&self, req: Self::Request) -> Self::Future {
-        let ss = str::from_utf8(&req).unwrap().to_string();
-        println!("request: {} -> ", req.len());
+        info!("request data size: {} -> ", req.len());
 //        println!("request: {}", ss);
 
-        {
-            use std::fs::File;
-            use std::io::prelude::*;
-
-            use std::fs::OpenOptions;
-
-            let mut options = OpenOptions::new();
-            options.write(true);
-            options.append(true);
-
-            let mut file = options.open("foo.txt").unwrap();
-            file.metadata().unwrap().permissions().set_readonly(false);
-            file.write(ss.as_ref()).unwrap();
-            file.write(b"\n").unwrap();
-            file.flush();
-        }
+//        {
+//            use std::fs::File;
+//            use std::io::prelude::*;
+//
+//            use std::fs::OpenOptions;
+//
+//            let mut options = OpenOptions::new();
+//            options.write(true);
+//            options.append(true);
+//
+//            let mut file = options.open("foo.txt").unwrap();
+//            file.metadata().unwrap().permissions().set_readonly(false);
+//            file.write(ss.as_ref()).unwrap();
+//            file.write(b"\n").unwrap();
+//            file.flush();
+//        }
 
         self.sender.send(req);
 
-        println!("send: ...");
+//        println!("send: ...");
         // In this case, the response is immediate.
         Box::new(future::ok("ok".to_string()))
     }
@@ -180,7 +179,7 @@ pub fn serve_frame() {
     let t2 = thread::spawn(move || {
         rx.iter().for_each(move |data |{
             let ss = str::from_utf8(&data).unwrap().to_string();
-            println!("receive: {} -> ", data.len());
+            info!("receive: {} -> ", ss);
         });
     });
 
@@ -195,12 +194,12 @@ pub fn serve_frame() {
 
 #[cfg(test)]
 mod tests {
-    use pretty_env_logger;
     use super::*;
+    use log4rs;
 
     #[test]
     pub fn serve_frame_test() {
-        drop(pretty_env_logger::init());
+        log4rs::init_file("config/log4rs.yaml", Default::default()).unwrap();
         serve_frame();
     }
 }

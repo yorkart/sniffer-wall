@@ -158,12 +158,10 @@ pub fn serve_line() {
 
 #[cfg(test)]
 mod tests {
-    use pretty_env_logger;
     use super::*;
 
     #[test]
     pub fn serve_line_test() {
-        drop(pretty_env_logger::init());
         serve_line();
     }
 }

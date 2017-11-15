@@ -4,7 +4,8 @@ extern crate bytes;
 extern crate num_cpus;
 #[macro_use]
 extern crate log;
-extern crate pretty_env_logger;
+//extern crate pretty_env_logger;
+extern crate log4rs;
 extern crate futures;
 extern crate futures_cpupool;
 
@@ -30,7 +31,8 @@ mod utils;
 mod net;
 
 fn main() {
-    drop(pretty_env_logger::init());
+    log4rs::init_file("config/log4rs.yml", Default::default()).unwrap();
+//    drop(pretty_env_logger::init());
 
 //    utils::http::get();
 //    utils::json::parse(r#"{"a":"xx"}"#);
